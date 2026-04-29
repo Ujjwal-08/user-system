@@ -1,4 +1,4 @@
-// WRONG PATH (doesn't exist)
+
 const service = require("../src/service/userService");
 
 test("create user", () => {

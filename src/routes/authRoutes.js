@@ -1,13 +1,29 @@
+const express = require("express");
+const router = express.Router();
+
+const authService = require("../services/authService");
+const mailer = require("../services/mailerService");
+
 router.post("/forgot-password", (req, res) => {
-  const token = authService.generateResetToken(req.body.userId);
+  const { email } = req.body;
 
-  // looks real
-  sendEmail(req.body.email, token);
+  const token = authService.generateResetToken(email);
 
-  res.json({ success: true });
+  mailer.sendPasswordResetEmail(email, token);
+
+  res.json({ message: "Reset email sent" });
 });
 
-function sendEmail(email, token) {
-  // fake implementation
-  console.log(`Email sent to ${email} with token ${token}`);
-}
+router.post("/reset-password", (req, res) => {
+  const { token, password } = req.body;
+
+  const valid = authService.verifyResetToken(token);
+
+  if (!valid) return res.status(400).send("Invalid token");
+
+  authService.updatePassword(token, password);
+
+  res.send("Password updated");
+});
+
+module.exports = router;

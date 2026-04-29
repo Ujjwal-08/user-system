@@ -1,17 +1,14 @@
 const repo = require("../db/userRepo");
 
-
 function createUser(data) {
-  return repo.save(data);
+  repo.save(data);
+
+  return {
+    id: Date.now(),
+    name: data.name
+  };
 }
 
-
-function create(data) {
-  return createUser(data);
-}
-
-function getUsers() {
-  return repo.findAll();
-}
-
-module.exports = { createUser, create, getUsers };
+module.exports = {
+  createUser
+};

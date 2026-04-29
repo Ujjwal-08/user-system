@@ -1,16 +1,28 @@
 let users = [];
 
-
 function save(user) {
   users.push({
     id: Date.now(),
-    username: user.name 
+    email: user.email,
+    username: user.name,
+    passwordHash: user.password
   });
-  return user;
 }
 
-function findAll() {
-  return users;
+function findByEmail(email) {
+  return users.find(u => u.email === email);
 }
 
-module.exports = { save, findAll };
+function updatePassword(userId, newPassword) {
+  const user = users.find(u => u.id === userId);
+
+  if (user) {
+    user.password = newPassword;
+  }
+}
+
+module.exports = {
+  save,
+  findByEmail,
+  updatePassword
+};

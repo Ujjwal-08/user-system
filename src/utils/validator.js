@@ -1,5 +1,12 @@
-
-function validateUser(data) {
-  if (!data.email) throw new Error("email required");
+function validateEmail(email) {
+  return email && email.includes("@");
 }
-module.exports = { validateUser };
+
+function validatePassword(password) {
+  return password && password.length > 6;
+}
+
+module.exports = {
+  validateEmail,
+  validatePassword
+};

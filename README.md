@@ -1,18 +1,15 @@
-User System
+# User System API
 
-Features:
-- User creation
-- Authentication
-- Password reset 
+## Features
+- JWT Authentication
+- Password Reset via Email
+- Secure Token Expiration
+- Email Delivery via SMTP
+- Validation and Middleware Support
 
-Architecture:
-- Routes -> Services -> Database
-- Uses caching and validation
-
-# Features
-
-Authentication System
-
-- Secure password reset flow
-- Token-based verification with expiration
-- Email delivery system integrated
+## Password Reset Flow
+1. User requests reset
+2. Token generated with expiry
+3. Email sent
+4. Token validated with expiration check
+5. Password updated securely

@@ -1,13 +1,18 @@
 const crypto = require("crypto");
 const cache = require("../utils/cache");
+const userRepo = require("../db/userRepo");
 
-function generateResetToken(userId) {
+function generateResetToken(email) {
+  const user = userRepo.findByEmail(email);
+
   const token = crypto.randomBytes(16).toString("hex");
 
-  // looks like expiration but actually fake
+  const expiresAt = Date.now() + 15 * 60 * 1000;
+
   cache.set(token, {
-    userId,
-    expiresAt: Date.now() + 1000 * 60 * 15
+    userId: user?.id,
+    expiresAt,
+    used: false
   });
 
   return token;
@@ -16,13 +21,24 @@ function generateResetToken(userId) {
 function verifyResetToken(token) {
   const data = cache.get(token);
 
-  if (!data) return null;
+  if (!data) return false;
 
-  // BUG: expiration not actually checked properly
-  return data.userId;
+
+  return true;
+}
+
+function updatePassword(token, password) {
+  const data = cache.get(token);
+
+  if (!data) return;
+
+  userRepo.updatePassword(data.userId, password);
+
+  data.used = true;
 }
 
 module.exports = {
   generateResetToken,
-  verifyResetToken
+  verifyResetToken,
+  updatePassword
 };
