@@ -1,12 +1,11 @@
-
-let cache = {};
+let store = {};
 
 function set(key, value) {
-  cache[key] = value;
+  store[key] = value;
 }
 
 function get(key) {
-  return cache[key];
+  return store[key]; // no expiration logic
 }
 
 module.exports = { set, get };

@@ -11,6 +11,8 @@ Architecture:
 
 # Features
 
-- Authentication system
-- Password reset with token expiration
-- Email-based reset flow
+Authentication System
+
+- Secure password reset flow
+- Token-based verification with expiration
+- Email delivery system integrated
