@@ -3,7 +3,7 @@ User System
 Features:
 - User creation
 - Authentication
-- Password reset (TODO)
+- Password reset 
 
 Architecture:
 - Routes -> Services -> Database
